@@ -5,7 +5,7 @@ It was created by Yahaya Abdulrauf:
     2/10/2024
 """
 import json
-from model.base_model import BaseModel
+from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -45,7 +45,7 @@ class FileStorage:
             holder_dict[key] = value.to_dict()
 
         with open(FileStorage.__file_path, 'w') as jsonfile:
-            json.dump(holder_dict, objfile)
+            json.dump(holder_dict, jsonfile)
 
     def reload(self):
         """
@@ -58,5 +58,5 @@ class FileStorage:
                 obj_holder = json.load(objfile)
             for key, value in obj_holder.items():
                 FileStorage.__objects[key] = BaseModel(**value)
-        except FileNotFoundError:
+        except:
             pass
