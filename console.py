@@ -9,12 +9,13 @@ import cmd
 import models
 import importlib
 from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb)"
 
-    class_list = ['BaseModel']
+    class_list = ['BaseModel', 'User']
 
     def do_quit(self, args):
         """
