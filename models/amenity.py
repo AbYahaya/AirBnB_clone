@@ -1,0 +1,18 @@
+#!/usr/bin/python3
+"""
+Another class to inherit from BaseModel
+Created by Yahaya Abdulrauf
+2/12/2024
+"""
+
+
+class Amenity(BaseModel):
+    name = ""
+    """
+    A class that inherits from BaseModel
+    """
+    def __init__(self, *args, **kwargs):
+        """
+        The init method of this class
+        """
+        super().__init__(*args, **kwargs)

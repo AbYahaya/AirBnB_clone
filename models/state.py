@@ -4,6 +4,7 @@ Another model that will inherit from BaseModel
 Created on 2/12/2024 by Yahaya Abdulrauf
 """
 
+
 class State(BasModels):
     name = ""
 
