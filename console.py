@@ -7,16 +7,19 @@ It was created by Yahaya Abdulrauf:
 """
 import cmd
 import models
-import importlib
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.city import City
+from models.state import State
+from models.amenity import Amenity
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb)"
 
-    class_list = ['BaseModel', 'User']
-
+    class_list = ['BaseModel', 'User', 'Place', 'City', 'State', 'Amenity',                     'Review']
     def do_quit(self, args):
         """
         Type 'exit' to exit the program
