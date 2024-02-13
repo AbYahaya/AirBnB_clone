@@ -4,6 +4,7 @@ This is the consoleof the AirBnB_clone project,
 
 It was created by Yahaya Abdulrauf:
     2/11/2024
+'str_rep' holds all objects returned by all()
 """
 import cmd
 import models
@@ -19,7 +20,9 @@ from models.review import Review
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb)"
 
-    class_list = ['BaseModel', 'User', 'Place', 'City', 'State', 'Amenity',                     'Review']
+    class_list = ['BaseModel', 'User', 'Place', 'City', 'State',
+                  'Review']
+
     def do_quit(self, args):
         """
         Type 'exit' to exit the program
@@ -121,10 +124,60 @@ class HBNBCommand(cmd.Cmd):
         setattr(str_rep[key], entered_line[2], entered_line[3])
         models.storage.save()
 
+    def default(self, args):
+        """
+        Method called when an argument is passed to determine what class
+        to work on
+        """
+        entered_line = args.strip('()').split('.')
+        if len(entered_line) < 2:
+            print("** No attribute **")
+            return
+        str_rep = models.storage.all()
+        class_name = entered_line[0].capitalize()
+        split1 = entered_line[1].strip(')').split('(').lower()
+        cmd_name = split1[0]
+        if cmd_name == 'all':
+            HBNBCommand.do_all(self, class_name)
+        elif cmd_name == 'show':
+            if len(split1) < 2:
+                print("** instance id missing **")
+            else:
+                HBNBCommand.do_show(self, class_name + ' ' + split1[1])
+        elif cmd_name == 'update':
+            split2 = split1[1].split(',')
+
+            if len(split2) == 0:
+                print("** No instance **")
+            elif len(split2) == 1 and type(split2[1]) == dict:
+                for key, value in split2[1].items():
+                    HBNBCommand.do_update(self, class_name + ' '
+                                          + split2[1] + ' ' + key + ' '
+                                          + value)
+            elif len(split2) == 1 and type(split2[1]) != dict:
+                print("** no instance found **")
+            elif len(split2) == 2:
+                print("** no instance found **")
+            else:
+                HBNBCommand.do_update(self, class_name + ' ' + split2[0] +
+                                      ' ' + split2[1] + ' ' + split2[2])
+        elif cmd_name == 'destroy':
+            if len(split1) < 2:
+                print("** no instance **")
+            else:
+                HBNBCommand.do_destroy(self, class_name + ' ' + split1[1])
+        elif cmd_name == 'count':
+            count = 0
+            for k in objects.keys():
+                key = k.split('.')
+                if class_name == key[0]:
+                    count += 1
+            print(count)
+
     @classmethod
     def verify_cls(cls, entered_line):
         """
-        A class mehtod to verify that entered line is in the class_list
+        A class method to verify that entered line is in the class_list
         """
         if len(entered_line) == 0:
             print("** class name missing **")
